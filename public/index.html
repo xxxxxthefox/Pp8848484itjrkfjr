@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>FOX HOSTING | إمبراطورية الثعلب</title>
+    <style>
+        body { background: #050505; color: #00ff41; font-family: 'Courier New', monospace; display: flex; justify-content: center; padding: 50px; }
+        .container { border: 2px solid #00ff41; padding: 30px; width: 800px; box-shadow: 0 0 20px #00ff41; }
+        .terminal { background: #000; padding: 15px; border-radius: 5px; margin-top: 20px; }
+        textarea { width: 100%; height: 200px; background: #111; color: #00ff41; border: 1px solid #00ff41; font-size: 16px; margin: 10px 0; }
+        button { background: #00ff41; color: #000; border: none; padding: 15px 30px; font-weight: bold; cursor: pointer; width: 100%; }
+        button:hover { background: #00cc33; }
+        .status { color: #888; font-size: 12px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>[ FOX HOSTING OS v1.0 ]</h1>
+        <p class="status">System Status: ONLINE | Admin: xxxxxthefox</p>
+        <div id="login-box">
+            <input type="text" id="user" placeholder="User ID" style="width:97%; background:#111; color:#00ff41; border:1px solid #00ff41; padding:10px;"><br><br>
+            <button onclick="document.getElementById('dash').style.display='block';">Access Terminal</button>
+        </div>
+        <div id="dash" style="display:none; margin-top:20px;">
+            <h3>Cloud Command Center</h3>
+            <textarea id="code" placeholder="# اكتب كود بايثون هنا لتشغيله للأبد سحابياً..."></textarea>
+            <button onclick="runCode()">DEPLOY & RUN</button>
+            <div class="terminal">
+                <strong>Output:</strong>
+                <pre id="output">Waiting for command...</pre>
+            </div>
+        </div>
+    </div>
+    <script>
+        async function runCode() {
+            const code = document.getElementById('code').value;
+            const user = document.getElementById('user').value;
+            const out = document.getElementById('output');
+            out.innerText = "Processing on Cloud...";
+            const res = await fetch('/api/execute', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({user: user, code: code, key: "FOX_SECRET_2026"})
+            });
+            const data = await res.json();
+            out.innerText = data.output;
+        }
+    </script>
+</body>
+</html>
